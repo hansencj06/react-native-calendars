@@ -117,6 +117,21 @@ class Calendar extends Component {
     this.shouldComponentUpdate = shouldComponentUpdate;
   }
 
+  componentWillReceiveProps(nextProps) {
+    const currentDateNext = parseDate(nextProps.current);
+    const currentDate = parseDate(this.props.current);
+    const currentMonth = this.state.currentMonth;
+
+    console.log(`react-native-calendars componentWillReceiveProps currentDate=${currentDate.toString('yyyy MM')} currentDateNext=${currentDateNext.toString('yyyy MM')} currentMonth=${currentMonth.toString('yyyy MM')}`)
+    if (currentDateNext && 
+      currentDateNext.toString('yyyy MM') !== currentDate.toString('yyyy MM')
+      ) {
+      this.setState({
+        currentMonth: currentDateNext.clone()
+      });
+    }
+  }
+
   updateMonth(day, doNotTriggerListeners) {
     if (day.toString('yyyy MM') === this.state.currentMonth.toString('yyyy MM')) {
       return;
