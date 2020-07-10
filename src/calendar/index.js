@@ -37,8 +37,8 @@ class Calendar extends Component {
     markedDates: PropTypes.object,
     /** Specify style for calendar container element. Default = {} */
     style: viewPropTypes.style,
-    /** Initially visible month. Default = Date() */
-    current: PropTypes.any,
+    /** The visible month. Default = Date() */
+    currentMonth: PropTypes.any,
     /** Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined */
     minDate: PropTypes.any,
     /** Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined */
@@ -108,7 +108,7 @@ class Calendar extends Component {
 
     this.style = styleConstructor(this.props.theme);
     this.state = {
-      currentMonth: props.current ? parseDate(props.current) : XDate()
+      currentMonth: props.currentMonth ? parseDate(props.currentMonth) : XDate()
     };
 
     this.updateMonth = this.updateMonth.bind(this);
@@ -118,16 +118,16 @@ class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentDateNext = parseDate(nextProps.current);
-    const currentDate = parseDate(this.props.current);
-    const currentMonth = this.state.currentMonth;
+    const currentMonthFromNextProps = parseDate(nextProps.currentMonth);
+    const currentMonthFromProps = parseDate(this.props.currentMonth);
+    const currentMonthFromState = this.state.currentMonth;
 
-    console.log(`react-native-calendars componentWillReceiveProps currentDate=${currentDate.toString('yyyy MM')} currentDateNext=${currentDateNext.toString('yyyy MM')} currentMonth=${currentMonth.toString('yyyy MM')}`)
-    if (currentDateNext && 
-      currentDateNext.toString('yyyy MM') !== currentDate.toString('yyyy MM')
+    console.log(`2020-10-07 currentMonthFromNextProps=${currentMonthFromNextProps?.toString('MM/yyyy')} currentMonthFromState=${currentMonthFromState?.toString('MM/yyyy')}`)
+    if (currentMonthFromNextProps && 
+      currentMonthFromNextProps.toString('yyyy MM') !== currentMonthFromState.toString('yyyy MM')
       ) {
       this.setState({
-        currentMonth: currentDateNext.clone()
+        currentMonth: currentMonthFromNextProps.clone()
       });
     }
   }
@@ -367,7 +367,7 @@ class Calendar extends Component {
     }
 
     let indicator;
-    const current = parseDate(this.props.current);
+    const current = parseDate(this.props.currentMonth);
     if (current) {
       const lastMonthOfDay = current.clone().addMonths(1, true).setDate(1).addDays(-1).toString('yyyy-MM-dd');
       if (this.props.displayLoadingIndicator &&
