@@ -1,5 +1,5 @@
 {
-  "name": "react-native-calendars",
+  "name": "cenergistic-react-native-calendars",
   "version": "1.22.0",
   "main": "src/index.js",
   "description": "React Native Calendar Components",
@@ -22,7 +22,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "author": "Wix.com",
+  "author": "Cenergistic",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.15",
